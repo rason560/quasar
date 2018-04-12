@@ -31,7 +31,7 @@
         class="col q-input-target ellipsis"
         :class="alignClass"
       >
-        {{ label }}
+        {{ total }}
       </div>
 
       <q-spinner
@@ -227,6 +227,9 @@ export default {
         ? `${(this.progress).toFixed(2)}% (${humanStorageSize(this.uploadedSize)} / ${total})`
         : `${this.queueLength} (${total})`
     },
+    total () {
+      return humanStorageSize(this.totalSize)
+    },
     progress () {
       return this.totalSize ? Math.min(99.99, this.uploadedSize / this.totalSize * 100) : 0
     },
@@ -367,14 +370,18 @@ export default {
       }
     },
     __computeTotalSize () {
-      this.totalSize = this.queueLength
-        ? this.queue.map(f => f.size).reduce((total, size) => total + size)
+      // this.totalSize = this.queueLength
+      //   ? this.queue.map(f => f.size).reduce((total, size) => total + size)
+      //   : 0
+      this.totalSize = this.hasExpandedContent
+        ? this.files.map(f => f.size).reduce((total, size) => total + size)
         : 0
     },
     __remove (file) {
       const
         name = file.name,
-        done = file.__doneUploading
+        done = file.__doneUploading,
+        timestamp = file.__timestamp
 
       if (this.uploading && !done) {
         this.$emit('remove:abort', file, file.xhr)
@@ -390,7 +397,7 @@ export default {
       }
 
       file.__removed = true
-      this.files = this.files.filter(obj => obj.name !== name)
+      this.files = this.files.filter(obj => obj.__timestamp !== timestamp)
       this.__computeTotalSize()
     },
     __pick () {
