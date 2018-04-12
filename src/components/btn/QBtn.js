@@ -112,7 +112,7 @@ export default {
       staticClass: 'q-btn inline relative-position q-btn-item non-selectable',
       'class': this.classes,
       style: this.style,
-      attrs: { tabindex: this.computedTabIndex, type: 'button' },
+      attrs: { tabindex: this.computedTabIndex },
       on: this.events,
       directives: this.hasRipple
         ? [{

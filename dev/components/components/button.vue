@@ -47,11 +47,8 @@
 
       <br><br>
       <p>
-        <form @submit.prevent="submit" @reset.prevent="reset" class="shadow-2 row q-pa-md items-center">
-          <q-input v-model="test" class="col" />
-          <q-btn fab-mini color="primary" icon="android" type="reset" class="on-right" title="Reset" />
-          <q-btn fab color="primary" icon="android" type="submit" class="on-right" title="Submit" />
-        </form>
+        <q-btn fab color="primary" icon="android" />
+        <q-btn fab-mini color="primary" icon="android" />
       </p>
 
       <br><br>
@@ -488,8 +485,7 @@ export default {
       loading: {},
       loading2: false,
       percentage: 0,
-      clickTimes: 0,
-      test: 'Initial value'
+      clickTimes: 0
     }
   },
   methods: {
@@ -523,13 +519,6 @@ export default {
     stopProgress () {
       Object.values(this.loading).filter(t => t).map(t => clearTimeout(t))
       this.loading = {}
-    },
-    submit () {
-      this.$q.notify('Submit called')
-    },
-    reset () {
-      this.test = 'Initial value'
-      this.$q.notify('Reset called')
     }
   },
   beforeDestroy () {

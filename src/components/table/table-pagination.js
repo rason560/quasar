@@ -1,24 +1,5 @@
 import extend from '../../utils/extend'
 
-function paginationChanged (oldPag, newPag) {
-  for (let prop in newPag) {
-    if (newPag[prop] !== oldPag[prop]) {
-      return true
-    }
-  }
-  return false
-}
-
-function fixPagination (p) {
-  if (p.page < 1) {
-    p.page = 1
-  }
-  if (p.rowsPerPage !== void 0 && p.rowsPerPage < 1) {
-    p.rowsPerPage = 5
-  }
-  return p
-}
-
 export default {
   props: {
     pagination: Object,
@@ -39,7 +20,7 @@ export default {
   },
   computed: {
     computedPagination () {
-      return fixPagination(extend({}, this.innerPagination, this.pagination))
+      return extend({}, this.innerPagination, this.pagination)
     },
     firstRowIndex () {
       const { page, rowsPerPage } = this.computedPagination
@@ -50,19 +31,19 @@ export default {
       return page * rowsPerPage
     },
     isFirstPage () {
-      return this.computedPagination.page === 1
+      const { page } = this.computedPagination
+      return page <= 1
     },
     pagesNumber () {
-      return Math.max(
-        1,
-        Math.ceil(this.computedRowsNumber / this.computedPagination.rowsPerPage)
-      )
+      const { rowsPerPage } = this.computedPagination
+      return Math.ceil(this.computedRowsNumber / rowsPerPage)
     },
     isLastPage () {
       if (this.lastRowIndex === 0) {
         return true
       }
-      return this.computedPagination.page >= this.pagesNumber
+      const { page } = this.computedPagination
+      return page >= this.pagesNumber
     },
     computedRowsPerPageOptions () {
       return this.rowsPerPageOptions.map(count => ({
@@ -72,11 +53,7 @@ export default {
     }
   },
   watch: {
-    pagesNumber (lastPage, oldLastPage) {
-      if (lastPage === oldLastPage) {
-        return
-      }
-
+    pagesNumber (lastPage) {
       const currentPage = this.computedPagination.page
       if (lastPage && !currentPage) {
         this.setPagination({ page: 1 })
@@ -88,11 +65,7 @@ export default {
   },
   methods: {
     setPagination (val) {
-      const newPagination = fixPagination(extend({}, this.computedPagination, val))
-
-      if (!paginationChanged(this.computedPagination, newPagination)) {
-        return
-      }
+      const newPagination = extend({}, this.computedPagination, val)
 
       if (this.isServerSide) {
         this.requestServerInteraction({

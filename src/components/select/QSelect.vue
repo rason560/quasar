@@ -62,7 +62,7 @@
     <q-icon
       v-if="!disable && !readonly && clearable && length"
       slot="after"
-      :name="$q.icon.input.clear"
+      name="cancel"
       class="q-if-control"
       @click.stop.native="clear"
     />
