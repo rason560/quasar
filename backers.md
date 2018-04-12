@@ -47,7 +47,6 @@ You can join them in supporting Quasar development by [pledging on Patreon](http
 - Bobby Ross
 - Nikolaj Frey
 - Netanel Edri
-- Yatima Kagurazaka
 
 ---
 
@@ -70,6 +69,7 @@ You can join them in supporting Quasar development by [pledging on Patreon](http
 - Matsumoto Takamasa
 - Josh Bodine
 - William Marques Vicente Gomes Correa
+- Samuel Desconsi
 - John (JCharante)
 - Florent Peyrard
 - Jacob Heruty
@@ -113,6 +113,7 @@ You can join them in supporting Quasar development by [pledging on Patreon](http
 - Mahesh Narayanamurthi ($5)
 - Rogério Queiroz ($5)
 - Sustained ($3.14)
+- Robson Martins ($2.5)
 - Joe L Wroten ($1)
 - Yasuhiro Kawagoe ($1)
 

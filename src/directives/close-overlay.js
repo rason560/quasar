@@ -1,12 +1,12 @@
 export default {
   name: 'close-overlay',
   bind (el, binding, vnode) {
-    const handler = ev => {
+    const handler = () => {
       let vm = vnode.componentInstance
       while ((vm = vm.$parent)) {
         const name = vm.$options.name
         if (name === 'QPopover' || name === 'QModal') {
-          vm.hide(ev)
+          vm.hide()
           break
         }
       }

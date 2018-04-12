@@ -22,7 +22,7 @@ function init ({ $q, Vue }) {
   document.body.appendChild(node)
 
   this.__vm = new Vue({
-    name: 'QNotifications',
+    name: 'q-notifications',
     data: {
       notifs: {
         center: [],
@@ -73,7 +73,7 @@ function init ({ $q, Vue }) {
           this.remove(notif)
         }
 
-        if (config.actions) {
+        if (notif.actions) {
           notif.actions = config.actions.map(item => {
             const
               handler = item.handler,
@@ -81,15 +81,11 @@ function init ({ $q, Vue }) {
             action.handler = typeof handler === 'function'
               ? () => {
                 handler()
-                !item.noDismiss && close()
+                close()
               }
               : () => close()
             return action
           })
-        }
-
-        if (typeof config.onDismiss === 'function') {
-          notif.onDismiss = config.onDismiss
         }
 
         if (notif.closeBtn) {
